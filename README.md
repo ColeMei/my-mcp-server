@@ -252,4 +252,4 @@ source ./setup_dev.sh
 
 ---
 
-**Built with ❤️ using the Model Context Protocol** | [MCP Documentation](https://docs.modelcontextprotocol.ai/)
+**Built with ❤️ using the Model Context Protocol** | [MCP Documentation](https://modelcontextprotocol.io/introduction)
