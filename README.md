@@ -59,49 +59,29 @@ The server follows a **clean, modular architecture** with clear separation of co
 
 ```
 my-mcp-server/
-├── .env.example           # Environment configuration template
-├── .gitignore            # Git ignore rules (Python, logs, data, etc.)
-├── README.md             # This comprehensive documentation
-├── requirements.txt      # Python dependencies
-├── setup_dev.sh         # One-command setup script (source it!)
-├── test_server.py       # Test suite for functionality verification
-├── data/                # SQLite database storage
-│   └── app.db          # Auto-created SQLite database
+├── .env.example        # Environment configuration template
+├── .gitignore          # Git ignore rules
+├── README.md           # Documentation
+├── requirements.txt    # Python dependencies
+├── setup_dev.sh        # One-command setup script (source it!)
+├── data/               # SQLite database (auto-created)
 ├── logs/               # Application logs (auto-created)
-│   └── mcp_server_*.log # Daily rotating log files
 ├── mcp-env/            # Virtual environment (auto-created)
-│   ├── bin/
-│   ├── lib/
-│   └── pyvenv.cfg
+├── tests/              # Test suite
+│   └── test_server.py  # Functionality verification tests
 └── src/                # Main source code
-    ├── __init__.py
-    ├── server.py       # Main MCP server entry point & FastMCP setup
-    ├── config/
-    │   ├── __init__.py
-    │   └── settings.py # Pydantic settings with env variable support
-    ├── tools/          # Business logic implementations
-    │   ├── __init__.py
-    │   ├── api_tools.py        # HTTP requests & external API calls
-    │   ├── database_tools.py   # SQLite operations & note management
-    │   ├── file_tools.py       # File system operations & CSV analysis
-    │   └── utility_tools.py    # Hash, encoding, password generation
-    ├── resources/      # Metadata & system information handlers
-    │   ├── __init__.py
-    │   ├── data_resources.py   # System info, DB schema, configuration
-    │   └── file_resources.py   # File metadata & directory trees
+    ├── server.py       # Main MCP server entry point
+    ├── config/         # Configuration & settings
+    ├── tools/          # Business logic (database, API, file, utility tools)
+    ├── resources/      # System information & metadata handlers
     ├── prompts/        # AI interaction templates
-    │   ├── __init__.py
-    │   └── template_prompts.py # Reusable prompt templates
-    └── utils/          # Shared utilities
-        ├── __init__.py
-        ├── logging.py  # Centralized logging configuration
-        └── validators.py # Input validation & security
+    └── utils/          # Shared utilities (logging, validation)
 ```
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.9+ 
+- Python 3.10+ 
 - macOS/Linux (zsh/bash shell)
 
 ### One-Command Setup ⚡
@@ -203,18 +183,6 @@ The server uses **Pydantic settings** with environment variable support:
 
 ## 🧪 Testing & Development
 
-### Quick Setup & Testing
-```bash
-# One-command setup (creates env, installs deps, activates)
-source ./setup_dev.sh
-
-# Test server functionality
-python test_server.py
-
-# Run MCP Inspector for interactive testing
-mcp dev src/server.py
-```
-
 ### Using MCP Inspector
 The MCP Inspector provides a web interface to:
 - Browse and test all available tools
@@ -222,21 +190,6 @@ The MCP Inspector provides a web interface to:
 - Test prompt templates
 - Monitor server logs in real-time
 - Debug protocol communication
-
-### Development Workflow
-```bash
-# Initial setup
-source ./setup_dev.sh
-
-# Daily development (if env is not active)
-source mcp-env/bin/activate
-
-# Run server
-mcp dev src/server.py
-
-# Test changes
-python test_server.py
-```
 
 ### Adding New Features
 
@@ -246,21 +199,14 @@ python test_server.py
 
 ## 📦 Dependencies
 
-- `mcp>=1.0.0` - Model Context Protocol core
-- `fastapi>=0.104.0` - FastAPI framework (used by FastMCP)
-- `uvicorn>=0.24.0` - ASGI server
-- `python-dotenv>=1.0.0` - Environment variable loading
-- `pandas>=2.0.0` - Data analysis for CSV operations
-- `requests>=2.31.0` - HTTP client library
-- `aiofiles>=23.0.0` - Async file operations
-- `pydantic>=2.0.0` - Data validation and settings
+See in `requirements.txt`
 
 ## 🤝 Integration
 
 This MCP server can be integrated with:
 - **Claude Desktop** - Add to `claude_desktop_config.json`
 - **Custom AI Applications** - Use as MCP protocol server
-- **Development Tools** - Via MCP Inspector for testing
+- **Development Tools** - Via MCP Inspector for testing, like Cursor, VSCode
 
 Example Claude Desktop configuration:
 ```json
@@ -278,6 +224,7 @@ Example Claude Desktop configuration:
 ## 🔍 Troubleshooting
 
 ### Common Issues
+
 - **Import Errors**: Ensure you ran `source ./setup_dev.sh` (not `./setup_dev.sh`)
 - **Virtual Environment Not Active**: Look for `(mcp-env)` in your terminal prompt
 - **Permission Errors**: Check file/directory permissions for `data/` and `logs/`
@@ -294,7 +241,7 @@ source ./setup_dev.sh
 - Set `DEBUG=true` in `.env` for verbose logging
 - Check `logs/mcp_server_*.log` for detailed error information  
 - Use MCP Inspector's real-time monitoring
-- Run test suite: `python test_server.py`
+- Run test suite: `python tests/test_server.py`
 
 ## 📈 Performance Notes
 
