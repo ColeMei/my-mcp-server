@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # MCP Server Development Setup Script
+# Usage: source ./setup_dev.sh
 echo "🚀 Setting up MCP Server development environment..."
 
 # Create virtual environment if it doesn't exist
@@ -9,8 +10,7 @@ if [ ! -d "mcp-env" ]; then
     python -m venv mcp-env
 fi
 
-# Activate virtual environment
-echo "🔧 Activating virtual environment..."
+# Temporarily activate for dependency installation
 source mcp-env/bin/activate
 
 # Install/upgrade dependencies
@@ -29,9 +29,12 @@ find . -name "*.pyc" -delete 2>/dev/null || true
 
 echo "✅ Development environment setup complete!"
 echo ""
-echo "🎯 Next steps:"
-echo "1. Activate environment: source mcp-env/bin/activate"
-echo "2. Run MCP Inspector: mcp dev src/server.py"
-echo "3. Open browser: http://127.0.0.1:6274"
+echo "🎉 Virtual environment is now activated in your current shell!"
+echo ""
+echo "🚀 Ready to run:"
+echo "   mcp dev src/server.py"
+echo ""
+echo "🌐 Then open your browser:"
+echo "   http://127.0.0.1:6274"
 echo ""
 echo "📖 See README.md for more details"
