@@ -8,7 +8,8 @@ from pathlib import Path
 
 # Add src to path
 current_dir = Path(__file__).parent
-src_dir = current_dir / "src"
+project_root = current_dir.parent
+src_dir = project_root / "src"
 sys.path.insert(0, str(src_dir))
 
 def test_imports():
