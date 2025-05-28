@@ -58,70 +58,89 @@ A comprehensive **Model Context Protocol (MCP)** server with modular architectur
 The server follows a **clean, modular architecture** with clear separation of concerns:
 
 ```
-src/
-├── server.py              # Main MCP server entry point & FastMCP setup
-├── config/
-│   ├── __init__.py
-│   └── settings.py         # Pydantic settings with env variable support
-├── tools/                  # Business logic implementations
-│   ├── __init__.py
-│   ├── database_tools.py   # SQLite operations & note management
-│   ├── api_tools.py        # HTTP requests & external API calls
-│   ├── file_tools.py       # File system operations & CSV analysis
-│   └── utility_tools.py    # Hash, encoding, password generation
-├── resources/              # Metadata & system information handlers
-│   ├── __init__.py
-│   ├── data_resources.py   # System info, DB schema, configuration
-│   └── file_resources.py   # File metadata & directory trees
-├── prompts/                # AI interaction templates
-│   ├── __init__.py
-│   └── template_prompts.py # Reusable prompt templates
-└── utils/                  # Shared utilities
+my-mcp-server/
+├── .env.example           # Environment configuration template
+├── .gitignore            # Git ignore rules (Python, logs, data, etc.)
+├── README.md             # This comprehensive documentation
+├── requirements.txt      # Python dependencies
+├── setup_dev.sh         # One-command setup script (source it!)
+├── test_server.py       # Test suite for functionality verification
+├── data/                # SQLite database storage
+│   └── app.db          # Auto-created SQLite database
+├── logs/               # Application logs (auto-created)
+│   └── mcp_server_*.log # Daily rotating log files
+├── mcp-env/            # Virtual environment (auto-created)
+│   ├── bin/
+│   ├── lib/
+│   └── pyvenv.cfg
+└── src/                # Main source code
     ├── __init__.py
-    ├── logging.py          # Centralized logging configuration
-    └── validators.py       # Input validation & security
+    ├── server.py       # Main MCP server entry point & FastMCP setup
+    ├── config/
+    │   ├── __init__.py
+    │   └── settings.py # Pydantic settings with env variable support
+    ├── tools/          # Business logic implementations
+    │   ├── __init__.py
+    │   ├── api_tools.py        # HTTP requests & external API calls
+    │   ├── database_tools.py   # SQLite operations & note management
+    │   ├── file_tools.py       # File system operations & CSV analysis
+    │   └── utility_tools.py    # Hash, encoding, password generation
+    ├── resources/      # Metadata & system information handlers
+    │   ├── __init__.py
+    │   ├── data_resources.py   # System info, DB schema, configuration
+    │   └── file_resources.py   # File metadata & directory trees
+    ├── prompts/        # AI interaction templates
+    │   ├── __init__.py
+    │   └── template_prompts.py # Reusable prompt templates
+    └── utils/          # Shared utilities
+        ├── __init__.py
+        ├── logging.py  # Centralized logging configuration
+        └── validators.py # Input validation & security
 ```
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Python 3.9+ 
-- Virtual environment (recommended)
+- macOS/Linux (zsh/bash shell)
 
-### Setup Instructions
+### One-Command Setup ⚡
 
-1. **Clone and navigate to project**
-   ```bash
-   cd my-mcp-server
-   ```
+```bash
+source ./setup_dev.sh
+```
 
-2. **Create and activate virtual environment**
-   ```bash
-   python -m venv mcp-env
-   source mcp-env/bin/activate  # Linux/Mac
-   # mcp-env\Scripts\activate   # Windows
-   ```
+This single command will:
+- ✅ Create virtual environment
+- ✅ Activate it in your current shell
+- ✅ Install all dependencies
+- ✅ Create necessary directories
+- ✅ Clean up cache files
 
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+> **Important**: Use `source ./setup_dev.sh` (not `./setup_dev.sh`) to ensure the virtual environment stays activated in your current shell.
 
-4. **Test with MCP Inspector**
-   ```bash
-   mcp dev src/server.py
-   ```
-   The inspector will open at `http://127.0.0.1:6274` 🎉
+### Run the Server
 
-5. **Environment Configuration (Optional)**
-   Create `.env` file:
-   ```env
-   SERVER_NAME=MyMCPServer
-   DEBUG=false
-   LOG_LEVEL=INFO
-   API_TIMEOUT=30
-   MAX_FILE_SIZE=10485760
-   ```
+```bash
+mcp dev src/server.py
+```
+The MCP Inspector will open at `http://127.0.0.1:6274` 🎉
+
+### Environment Configuration (Optional)
+
+Copy `.env.example` to `.env` and customize:
+```bash
+cp .env.example .env
+```
+
+Example configuration:
+```env
+SERVER_NAME=MyMCPServer
+DEBUG=false
+LOG_LEVEL=INFO
+API_TIMEOUT=30
+MAX_FILE_SIZE=10485760
+```
 
 ## 🛠️ Available Tools (12 total)
 
@@ -184,6 +203,18 @@ The server uses **Pydantic settings** with environment variable support:
 
 ## 🧪 Testing & Development
 
+### Quick Setup & Testing
+```bash
+# One-command setup (creates env, installs deps, activates)
+source ./setup_dev.sh
+
+# Test server functionality
+python test_server.py
+
+# Run MCP Inspector for interactive testing
+mcp dev src/server.py
+```
+
 ### Using MCP Inspector
 The MCP Inspector provides a web interface to:
 - Browse and test all available tools
@@ -191,6 +222,21 @@ The MCP Inspector provides a web interface to:
 - Test prompt templates
 - Monitor server logs in real-time
 - Debug protocol communication
+
+### Development Workflow
+```bash
+# Initial setup
+source ./setup_dev.sh
+
+# Daily development (if env is not active)
+source mcp-env/bin/activate
+
+# Run server
+mcp dev src/server.py
+
+# Test changes
+python test_server.py
+```
 
 ### Adding New Features
 
@@ -232,14 +278,23 @@ Example Claude Desktop configuration:
 ## 🔍 Troubleshooting
 
 ### Common Issues
-- **Import Errors**: Ensure virtual environment is activated
+- **Import Errors**: Ensure you ran `source ./setup_dev.sh` (not `./setup_dev.sh`)
+- **Virtual Environment Not Active**: Look for `(mcp-env)` in your terminal prompt
 - **Permission Errors**: Check file/directory permissions for `data/` and `logs/`
 - **Port Conflicts**: MCP Inspector uses ports 6274 and 6277
+
+### Setup Issues
+```bash
+# If setup fails, clean and retry
+rm -rf mcp-env data logs
+source ./setup_dev.sh
+```
 
 ### Debugging
 - Set `DEBUG=true` in `.env` for verbose logging
 - Check `logs/mcp_server_*.log` for detailed error information  
 - Use MCP Inspector's real-time monitoring
+- Run test suite: `python test_server.py`
 
 ## 📈 Performance Notes
 
