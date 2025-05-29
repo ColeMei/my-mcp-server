@@ -1,9 +1,14 @@
+# Core MCP and server dependencies
 mcp>=1.0.0
-fastapi>=0.104.0
-uvicorn>=0.24.0
-python-dotenv>=1.0.0
+
+# Data handling and file operations
 pandas>=2.0.0
-requests>=2.31.0
 aiofiles>=23.0.0
+
+# Configuration and environment
+python-dotenv>=1.0.0
 pydantic>=2.0.0
 pydantic-settings>=2.0.0
+
+# System monitoring (optional but useful)
+psutil

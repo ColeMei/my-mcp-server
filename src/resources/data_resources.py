@@ -69,9 +69,19 @@ class DataResources:
     def get_configuration(self) -> Dict[str, Any]:
         """Get current server configuration"""
         try:
-            from ..config.settings import get_settings
-            settings = get_settings()
+            # Fix: Use absolute import instead of relative
+            import sys
+            import os
             
+            # Add the parent directory to path if needed
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            parent_dir = os.path.dirname(current_dir)
+            if parent_dir not in sys.path:
+                sys.path.insert(0, parent_dir)
+                
+            from config.settings import get_settings  # ✅ Absolute import
+            
+            settings = get_settings()
             return {
                 "server_name": settings.server_name,
                 "server_version": settings.server_version,
@@ -80,7 +90,7 @@ class DataResources:
                 "api_timeout": settings.api_timeout,
                 "max_file_size": settings.max_file_size
             }
-            
         except Exception as e:
             logger.error(f"Error getting configuration: {str(e)}")
             return {"error": str(e)}
+

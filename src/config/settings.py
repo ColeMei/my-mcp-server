@@ -12,8 +12,8 @@ class Settings(BaseSettings):
     """Application settings"""
     
     # Server settings
-    server_name: str = Field(default="MyMCPServer", env="SERVER_NAME")
-    server_version: str = Field(default="1.0.0", env="SERVER_VERSION")
+    server_name: str = Field(default="Cole-Daily-MCP", env="SERVER_NAME")
+    server_version: str = Field(default="2.0.0", env="SERVER_VERSION")
     debug: bool = Field(default=False, env="DEBUG")
     log_level: str = Field(default="INFO", env="LOG_LEVEL")
     

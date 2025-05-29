@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# MCP Server Development Setup Script
+# Cole's Daily Workflow MCP Server Setup Script
 # Usage: source ./setup_dev.sh
-echo "🚀 Setting up MCP Server development environment..."
+echo "🚀 Setting up Cole's Daily Workflow MCP Server..."
 
 # Create virtual environment if it doesn't exist
 if [ ! -d "mcp-env" ]; then
@@ -29,12 +29,13 @@ find . -name "*.pyc" -delete 2>/dev/null || true
 
 echo "✅ Development environment setup complete!"
 echo ""
-echo "🎉 Virtual environment is now activated in your current shell!"
+echo "🎉 Your streamlined daily workflow MCP server is ready!"
 echo ""
-echo "🚀 Ready to run:"
+echo "🚀 Start the server:"
 echo "   mcp dev src/server.py"
 echo ""
-echo "🌐 Then open your browser:"
+echo "🌐 Then open MCP Inspector:"
 echo "   http://127.0.0.1:6274"
 echo ""
-echo "📖 See README.md for more details"
+echo "📖 See WORKFLOW_EXAMPLES.md for usage examples"
+echo "📖 See README.md for full documentation"

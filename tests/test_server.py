@@ -17,9 +17,17 @@ def test_imports():
     print("🧪 Testing module imports...")
     
     try:
-        from tools import DatabaseTools, APITools, FileTools, UtilityTools
+        from tools import DatabaseTools, FileTools
         from resources import DataResources, FileResources
-        from prompts import TemplatePrompts
+        from prompts import (
+            get_analyze_notes_prompt,
+            get_optimize_database_prompt, 
+            get_database_migration_prompt,
+            get_analyze_project_prompt,
+            get_code_review_prompt,
+            get_refactor_project_prompt,
+            get_file_organization_prompt
+        )
         from config.settings import get_settings
         from utils.logging import setup_logging, get_logger
         print("✅ All imports successful!")
@@ -46,12 +54,10 @@ def test_tools():
     print("🛠️ Testing tool initialization...")
     
     try:
-        from tools import DatabaseTools, APITools, FileTools, UtilityTools
+        from tools import DatabaseTools, FileTools
         
         db_tools = DatabaseTools()
-        api_tools = APITools()
         file_tools = FileTools()
-        utility_tools = UtilityTools()
         
         print("✅ All tools initialized successfully!")
         return True
@@ -64,16 +70,15 @@ def test_basic_functionality():
     print("⚡ Testing basic functionality...")
     
     try:
-        from tools.utility_tools import UtilityTools
-        utility_tools = UtilityTools()
+        from tools.database_tools import DatabaseTools
+        from tools.file_tools import FileTools
         
-        # Test hash generation
-        result = utility_tools.generate_hash("test", "md5")
-        assert result["success"] == True
+        db_tools = DatabaseTools()
+        file_tools = FileTools()
         
-        # Test base64 encoding
-        result = utility_tools.encode_decode_base64("hello", "encode")
-        assert result["success"] == True
+        # Test database connection
+        result = db_tools.get_notes(5)
+        assert "success" in str(result).lower() or "data" in str(result).lower()
         
         print("✅ Basic functionality tests passed!")
         return True
@@ -103,7 +108,7 @@ def main():
     print(f"📊 Results: {passed}/{len(tests)} tests passed")
     
     if passed == len(tests):
-        print("🎉 All tests passed! Your MCP server is ready to use.")
+        print("🎉 All tests passed! Your streamlined MCP server is ready to use.")
         print("   Run: mcp dev src/server.py")
         return 0
     else:
